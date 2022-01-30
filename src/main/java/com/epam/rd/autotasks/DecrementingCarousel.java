@@ -21,10 +21,11 @@ public class DecrementingCarousel extends CarouselRun {
     }
 
     public CarouselRun run() {
-        runEd = true;
-        if (runEd)
+
+        if (!runEd) {
+            runEd = true;
             return this;
-        else
+        }else
             return null;
     }
 }
