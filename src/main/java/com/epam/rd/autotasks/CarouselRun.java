@@ -2,42 +2,31 @@ package com.epam.rd.autotasks;
 
 public class CarouselRun {
 
-    public int[] arr;
-    private int k = 0;
+    protected int[] arr;
+    protected int capacity;
     private int i = 0;
-    private boolean b = false;
-
-    public CarouselRun(int[] arr) {
-        this.arr = arr;
-    }
-
-    public CarouselRun() {
-    }
 
     public int next() {
-        if (isFinished() == false) {
-            for (int i = 0; i < arr.length; i++) {
-                if (arr[i] == 0) {
-                    k++;
-                    i++;
-                    continue;
-                }
-                if (k == arr.length - 1) {
-                    b = true;
-                    return -1;
-                }
-                return arr[i]--;
-            }
+        if (arr.length == 0 || Arrays.stream(arr).sum() == 0)
+            return -1;
+
+        if (i >= capacity)
+            i = 0;
+
+        while (arr[i] == 0) {
+            i++;
+            if (i > arr.length - 1)
+                i = 0;
         }
-        return -1;
+
+        if (arr[i] > 0)
+            return arr[i++]--;
+
+        return 0;
     }
 
-    public boolean isFinished() {//когда больше нет элементов для уменьшения, возвращает true.
-        // В противном случае возвращает false.
-        if (next() == -1) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isFinished() {
+        return Arrays.stream(arr).sum() == 0;
     }
+
 }
